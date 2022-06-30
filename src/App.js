@@ -12,15 +12,17 @@ import {useMoralis,useMoralisWeb3Api,useWeb3Contract} from 'react-moralis'
 
 const abi = [
   {
+    "anonymous": false,
     "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "_erc20_contract_address",
-        "type": "address"
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    "name": "Initialized",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -83,7 +85,7 @@ const abi = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
+        "name": "",
         "type": "address"
       }
     ],
@@ -116,7 +118,7 @@ const abi = [
     "name": "erc20Contract",
     "outputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "contract IERC20Upgradeable",
         "name": "",
         "type": "address"
       }
@@ -153,6 +155,19 @@ const abi = [
   {
     "inputs": [
       {
+        "internalType": "contract IERC20Upgradeable",
+        "name": "_erc20_contract_address",
+        "type": "address"
+      }
+    ],
+    "name": "setContractAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_timePeriodSeconds",
         "type": "uint256"
@@ -166,7 +181,7 @@ const abi = [
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "contract IERC20Upgradeable",
         "name": "token",
         "type": "address"
       },
@@ -210,7 +225,7 @@ const abi = [
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "contract IERC20Upgradeable",
         "name": "token",
         "type": "address"
       },
@@ -228,7 +243,7 @@ const abi = [
   {
     "inputs": [
       {
-        "internalType": "contract IERC20",
+        "internalType": "contract IERC20Upgradeable",
         "name": "token",
         "type": "address"
       },
@@ -257,7 +272,7 @@ export default function App() {
   const Stake = (amount)=>{
     setParams({
       abi: abi,
-      contractAddress: "0xf98a670697572c34627B1227A8623C68Dd04c2Ea",
+      contractAddress: "0x93141A395451b4c91e9CeE9bfbA251799DB8F505",
       functionName: "stakeTokens",
       params:{
         token: "0xa1d331b5c70137facfe0148acbf90623ec8df9af",
@@ -270,7 +285,7 @@ export default function App() {
     if(amount <= totalStaked){
       setParams({
         abi: abi,
-        contractAddress: "0xf98a670697572c34627B1227A8623C68Dd04c2Ea",
+        contractAddress: "0x93141A395451b4c91e9CeE9bfbA251799DB8F505",
         functionName: "unstakeTokens",
         params:{
           token: "0xa1d331b5c70137facfe0148acbf90623ec8df9af",
@@ -283,7 +298,7 @@ export default function App() {
   const getTotalStake = (address)=>{
     setParams({
       abi: abi,
-      contractAddress: "0xf98a670697572c34627B1227A8623C68Dd04c2Ea",
+      contractAddress: "0x93141A395451b4c91e9CeE9bfbA251799DB8F505",
       functionName: "balances",
       params: {
         account: address
@@ -308,7 +323,7 @@ export default function App() {
     if(isAuthenticated && isWeb3Enabled && !totalStaked){
       getTotalStake(user.get("ethAddress"))
     }
-  },[isAuthenticated,isWeb3Enabled,totalStaked,getTotalStake,user])
+  },[isAuthenticated,isWeb3Enabled,totalStaked,user])
   useEffect(()=>{
     if(data?._hex){
       setTotalStaked(parseInt(data?._hex,16))

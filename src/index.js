@@ -8,7 +8,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <MoralisProvider serverUrl="https://dumnzbza3sew.usemoralis.com:2053/server" appId="5vujWYyqPF3AGrcRb2CIXA4zaZk3TfUsjHwpWdkQ">
+  <MoralisProvider serverUrl="https://radlfddhatmq.usemoralis.com:2053/server" appId="gzNniEQEsHjz7AEOwHqQGm6LHdvjiGKSIz49a4dX">
       <ChakraProvider>
           <App />
       </ChakraProvider>
