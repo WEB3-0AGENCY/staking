@@ -16,12 +16,76 @@ const abi = [
     "inputs": [
       {
         "indexed": false,
+        "internalType": "address",
+        "name": "previousAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "beacon",
+        "type": "address"
+      }
+    ],
+    "name": "BeaconUpgraded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint8",
         "name": "version",
         "type": "uint8"
       }
     ],
     "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "implementation",
+        "type": "address"
+      }
+    ],
+    "name": "Upgraded",
     "type": "event"
   },
   {
@@ -140,6 +204,19 @@ const abi = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "contract IERC20Upgradeable",
+        "name": "_erc20_contract_address",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -153,14 +230,47 @@ const abi = [
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "paused",
+    "outputs": [
       {
-        "internalType": "contract IERC20Upgradeable",
-        "name": "_erc20_contract_address",
-        "type": "address"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
-    "name": "setContractAddress",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proxiableUUID",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_paused",
+        "type": "bool"
+      }
+    ],
+    "name": "setPaused",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -225,17 +335,12 @@ const abi = [
   {
     "inputs": [
       {
-        "internalType": "contract IERC20Upgradeable",
-        "name": "token",
+        "internalType": "address",
+        "name": "newOwner",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
       }
     ],
-    "name": "transferAccidentlyLockedTokens",
+    "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -257,6 +362,37 @@ const abi = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      }
+    ],
+    "name": "upgradeTo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "upgradeToAndCall",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   }
 ]
 
@@ -272,7 +408,7 @@ export default function App() {
   const Stake = (amount)=>{
     setParams({
       abi: abi,
-      contractAddress: "0x93141A395451b4c91e9CeE9bfbA251799DB8F505",
+      contractAddress: "0xA519b71E531E3b9BdA27687d1fa0a79E5741e6D1",
       functionName: "stakeTokens",
       params:{
         token: "0xa1d331b5c70137facfe0148acbf90623ec8df9af",
@@ -285,7 +421,7 @@ export default function App() {
     if(amount <= totalStaked){
       setParams({
         abi: abi,
-        contractAddress: "0x93141A395451b4c91e9CeE9bfbA251799DB8F505",
+        contractAddress: "0xA519b71E531E3b9BdA27687d1fa0a79E5741e6D1",
         functionName: "unstakeTokens",
         params:{
           token: "0xa1d331b5c70137facfe0148acbf90623ec8df9af",
@@ -298,7 +434,7 @@ export default function App() {
   const getTotalStake = (address)=>{
     setParams({
       abi: abi,
-      contractAddress: "0x93141A395451b4c91e9CeE9bfbA251799DB8F505",
+      contractAddress: "0xA519b71E531E3b9BdA27687d1fa0a79E5741e6D1",
       functionName: "balances",
       params: {
         account: address
