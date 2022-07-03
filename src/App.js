@@ -490,7 +490,7 @@ export default function App() {
             px={3}
             color={'green.500'}
             rounded={'full'}>
-            Staking TRS
+            Stake VRMC
           </Text>
           <Text fontSize={'2xl'} fontWeight={800}>
                 Balance
@@ -514,7 +514,7 @@ export default function App() {
             <Text fontSize={'6xl'} fontWeight={800}>
               {totalStaked && isAuthenticated ? tokenValue(totalStaked,18) : 0}
             </Text>
-            <Text color={'gray.500'}>TRS</Text>
+            <Text color={'gray.700'}>VRMC</Text>
           </Stack>
         </Stack>
 
