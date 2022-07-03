@@ -499,7 +499,7 @@ export default function App() {
             <Text fontSize={'6xl'} fontWeight={800}>
               {trs && isAuthenticated ? tokenValue(trs[0]?.balance,trs[0]?.decimals) : 0}
             </Text>
-            <Text color={'gray.500'}>TRS</Text>
+            <Text color={'gray.700'}>VRMC</Text>
           </Stack>
         </Stack>
         <Stack
